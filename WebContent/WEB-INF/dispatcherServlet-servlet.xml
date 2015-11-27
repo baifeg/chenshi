@@ -7,9 +7,8 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
 	<!-- 自动扫描的包名 -->
-	<context:component-scan base-package="com.baifeg.controllers"></context:component-scan>
-	<context:component-scan base-package="com.baifeg.services"></context:component-scan>
-	<context:component-scan base-package="com.baifeg.models.spring"></context:component-scan>
+	<context:component-scan base-package="com.chenshi"></context:component-scan>
+	<context:annotation-config/>
 	<!-- 默认的注解映射的支持 -->
 	<mvc:resources mapping="/assets/**" location="/assets/" />
 	<mvc:annotation-driven />

@@ -24,6 +24,11 @@ public class CommonDao<T>
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	public CommonDao()
+	{
+		clazz = null;
+	}
+
 	public CommonDao(Class<T> clazz)
 	{
 		this.clazz = clazz;
