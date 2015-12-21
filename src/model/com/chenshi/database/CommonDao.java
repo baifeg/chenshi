@@ -7,39 +7,24 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Criterion;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.chenshi.spring.SpringHelper;
 
-@Repository
-@Transactional
-public class CommonDao<T>
+public class CommonDao<T> extends HibernateDaoSupport
 {
 	private final Class<T> clazz;
 	private static HibernateTemplate template;
 
-	@Autowired
 	private SessionFactory sessionFactory;
-
-	public CommonDao()
-	{
-		clazz = null;
-	}
 
 	public CommonDao(Class<T> clazz)
 	{
 		this.clazz = clazz;
 		sessionFactory = SpringHelper.getSessionFactory();
-		// template = new HibernateTemplate(SpringHelper.getSessionFactory());
-		template = new HibernateTemplate(sessionFactory);
-	}
-
-	private Session getSession()
-	{
-		return sessionFactory.getCurrentSession();
+		setSessionFactory(sessionFactory);
+		template = getHibernateTemplate();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -69,13 +54,27 @@ public class CommonDao<T>
 		return list;
 	}
 
-	public void add(T t)
+	public void saveOrUpdate(T t)
 	{
-		template.save(t);
+		template.saveOrUpdate(t);
+	}
+
+	/**
+	 * @param t
+	 * @return primary key of the entity
+	 */
+	public Long save(T t)
+	{
+		return (Long) template.save(t);
 	}
 
 	public void delete(T t)
 	{
 		template.delete(t);
+	}
+
+	public T getById(long id)
+	{
+		return template.get(clazz, id);
 	}
 }

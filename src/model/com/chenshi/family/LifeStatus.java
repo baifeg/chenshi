@@ -2,5 +2,17 @@ package com.chenshi.family;
 
 public enum LifeStatus
 {
-	ALIVE, DEAD
+	ALIVE("‘⁄ ¿"), DEAD("“—π ");
+
+	private String label;
+
+	private LifeStatus(String label)
+	{
+		this.label = label;
+	}
+
+	public String getLabel()
+	{
+		return label;
+	}
 }

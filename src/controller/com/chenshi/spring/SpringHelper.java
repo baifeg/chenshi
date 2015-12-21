@@ -1,24 +1,15 @@
 package com.chenshi.spring;
 
 import org.hibernate.SessionFactory;
+import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
-public class SpringHelper
+@Component
+public class SpringHelper implements ApplicationContextAware
 {
-	private final static ApplicationContext context;
-	private final static SessionFactory sessionFactory;
-
-	static
-	{
-		context = new ClassPathXmlApplicationContext("spring-jdbc.xml");
-		sessionFactory = context.getBean("sessionFactory", SessionFactory.class);
-	}
-	
-	private SpringHelper()
-	{
-		throw new IllegalAccessError();
-	}
+	private static ApplicationContext context;
 	
 	public static ApplicationContext getApplicationContext()
 	{
@@ -27,6 +18,12 @@ public class SpringHelper
 
 	public static SessionFactory getSessionFactory()
 	{
-		return sessionFactory;
+		return context.getBean("sessionFactory", SessionFactory.class);
+	}
+
+	@Override
+	public void setApplicationContext(ApplicationContext context) throws BeansException
+	{
+		SpringHelper.context = context;
 	}
 }

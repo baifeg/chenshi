@@ -8,6 +8,9 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,9 +18,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "Person")
+@Table
 public class Person
 {
 	@Id
@@ -31,13 +36,14 @@ public class Person
 	private String iteraryName;
 
 	@Column
+	@Temporal(TemporalType.DATE)
 	private Date birthday;
 
 	@ManyToOne(cascade = { CascadeType.ALL })
-	@JoinColumn(name = "parentId")
+	@JoinColumn(name = "PARENTID")
 	private Person parent;
 
-	@OneToMany(mappedBy = "parent")
+	@OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
 	private Set<Person> children = new HashSet<>();
 
 	@Column
@@ -52,10 +58,11 @@ public class Person
 	@Column
 	private String operator;
 
-	@Column
+	@Enumerated(EnumType.STRING)
 	private LifeStatus lifeStatus;
 
 	@Column
+	@Temporal(TemporalType.DATE)
 	private Date deathday;
 
 	/**
@@ -67,8 +74,7 @@ public class Person
 	}
 
 	/**
-	 * @param id
-	 *            the id to set
+	 * @param id the id to set
 	 */
 	public void setId(long id)
 	{
@@ -84,8 +90,7 @@ public class Person
 	}
 
 	/**
-	 * @param name
-	 *            the name to set
+	 * @param name the name to set
 	 */
 	public void setName(String name)
 	{
@@ -101,8 +106,7 @@ public class Person
 	}
 
 	/**
-	 * @param iteraryName
-	 *            the iteraryName to set
+	 * @param iteraryName the iteraryName to set
 	 */
 	public void setIteraryName(String iteraryName)
 	{
@@ -118,8 +122,7 @@ public class Person
 	}
 
 	/**
-	 * @param birthday
-	 *            the birthday to set
+	 * @param birthday the birthday to set
 	 */
 	public void setBirthday(Date birthday)
 	{
@@ -135,8 +138,7 @@ public class Person
 	}
 
 	/**
-	 * @param parent
-	 *            the parent to set
+	 * @param parent the parent to set
 	 */
 	public void setParent(Person parent)
 	{
@@ -152,8 +154,7 @@ public class Person
 	}
 
 	/**
-	 * @param updatedAt
-	 *            the updatedAt to set
+	 * @param updatedAt the updatedAt to set
 	 */
 	public void setUpdatedAt(Timestamp updatedAt)
 	{
@@ -169,8 +170,7 @@ public class Person
 	}
 
 	/**
-	 * @param createdAt
-	 *            the createdAt to set
+	 * @param createdAt the createdAt to set
 	 */
 	public void setCreatedAt(Timestamp createdAt)
 	{
@@ -186,8 +186,7 @@ public class Person
 	}
 
 	/**
-	 * @param description
-	 *            the description to set
+	 * @param description the description to set
 	 */
 	public void setDescription(String description)
 	{
@@ -203,8 +202,7 @@ public class Person
 	}
 
 	/**
-	 * @param operator
-	 *            the operator to set
+	 * @param operator the operator to set
 	 */
 	public void setOperator(String operator)
 	{
@@ -220,8 +218,7 @@ public class Person
 	}
 
 	/**
-	 * @param lifeStatus
-	 *            the lifeStatus to set
+	 * @param lifeStatus the lifeStatus to set
 	 */
 	public void setLifeStatus(LifeStatus lifeStatus)
 	{
@@ -237,8 +234,7 @@ public class Person
 	}
 
 	/**
-	 * @param deathday
-	 *            the deathday to set
+	 * @param deathday the deathday to set
 	 */
 	public void setDeathday(Date deathday)
 	{
@@ -254,11 +250,25 @@ public class Person
 	}
 
 	/**
-	 * @param children
-	 *            the children to set
+	 * @param children the children to set
 	 */
 	public void setChildren(Set<Person> children)
 	{
 		this.children = children;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString()
+	{
+		return "Person [id=" + id + ", name=" + name + ", iteraryName=" + iteraryName
+				+ ", birthday=" + birthday + ", parent=" + parent.getName() + ", updatedAt="
+				+ updatedAt + ", createdAt=" + createdAt + ", description=" + description
+				+ ", operator=" + operator + ", lifeStatus=" + lifeStatus + ", deathday=" + deathday
+				+ "]";
 	}
 }
