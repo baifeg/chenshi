@@ -3,10 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<t:layout>
-    <jsp:attribute name="title">Edit Person</jsp:attribute>
-    <jsp:body>
-    	<form:form modelAttribute="personModel" method="post" cssClass="form-horizontal">
+<t:layout title="编辑人物">
+    <form:form modelAttribute="personModel" method="post" cssClass="form-horizontal">
     	<div class="form-group">
     		<div class="col-sm-offset-2 col-sm-10">
 	      		<form:errors path="*" cssClass="text-danger"/>
@@ -40,5 +38,4 @@
 		    </div>
 		</div>
     </form:form>
-    </jsp:body>
 </t:layout>

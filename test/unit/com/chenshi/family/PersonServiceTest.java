@@ -2,6 +2,8 @@ package com.chenshi.family;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -31,6 +33,14 @@ public class PersonServiceTest
 		person.setName("hhhh");
 		person.setOperator("admin");
 		personService.save(person);
+	}
+
+	@Test
+	public void testFindValidList()
+	{
+		PersonService personService = context.getBean(PersonService.class);
+		List<Person> list = personService.findValidList();
+		System.out.println(list);
 	}
 
 }

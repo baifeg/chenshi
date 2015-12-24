@@ -38,7 +38,7 @@ public class PersonController
 		if (!model.containsAttribute(personModel))
 			model.addAttribute(personModel, new PersonVo());
 
-		List<Person> personList = personService.queryAll();
+		List<Person> personList = personService.findValidList();
 		List<LifeStatus> statusList = Stream.of(LifeStatus.values()).collect(Collectors.toList());
 		Map<String, Object> map = new HashMap<>();
 		map.put("personList", personList);
@@ -67,7 +67,7 @@ public class PersonController
 	@RequestMapping("/list")
 	public ModelAndView list()
 	{
-		List<Person> list = personService.findAll();
+		List<Person> list = personService.findValidList();
 		log.info("list size: " + list.size());
 		Map<String, Object> map = new HashMap<>();
 		map.put("personList", list);

@@ -2,11 +2,9 @@ package com.chenshi.database;
 
 import java.util.List;
 
-import org.hibernate.Criteria;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -15,7 +13,7 @@ import com.chenshi.spring.SpringHelper;
 public class CommonDao<T> extends HibernateDaoSupport
 {
 	private final Class<T> clazz;
-	private static HibernateTemplate template;
+	protected static HibernateTemplate template;
 
 	private SessionFactory sessionFactory;
 
@@ -39,19 +37,15 @@ public class CommonDao<T> extends HibernateDaoSupport
 		return query(new Criterion[] {});
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<T> query(Criterion... criterions)
 	{
-		Session session = getSession();
-		Transaction tx = session.beginTransaction();
-		Criteria criteria = session.createCriteria(clazz);
+		DetachedCriteria criteria = DetachedCriteria.forClass(clazz);
 		for (Criterion criterion : criterions)
 		{
 			criteria.add(criterion);
 		}
-		@SuppressWarnings("unchecked")
-		List<T> list = criteria.list();
-		tx.commit();
-		return list;
+		return (List<T>) template.findByCriteria(criteria);
 	}
 
 	public void saveOrUpdate(T t)
